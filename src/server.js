@@ -3,7 +3,7 @@ const app = express();
 const PORT = 3000;
 
 // Importa a conexão com o banco de dados (isso fará com que o script db.js seja executado)
-const db = require('./src/database/db'); // Adicione esta linha
+const db = require('./database/db'); // Adicione esta linha
 
 // Define uma rota básica para a raiz do servidor
 app.get('/', (req, res) => {
