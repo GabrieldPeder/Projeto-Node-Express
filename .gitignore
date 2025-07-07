@@ -1,0 +1,26 @@
+# Dependências do Node
+node_modules/
+npm-debug.log*
+
+# Arquivos de ambiente/segredo (se for usar no futuro)
+.env
+.env.*
+
+# Logs da sua aplicação
+logs/
+*.log
+
+# Arquivos de build (se for gerar no futuro)
+dist/
+build/
+
+# Arquivos específicos do sistema operacional e IDEs
+.DS_Store # macOS specific
+Thumbs.db # Windows specific
+.vscode/ # Pasta de configuração do VS Code (opcional, mas geralmente bom ignorar configs locais)
+.idea/   # Pasta de configuração do WebStorm/IntelliJ (se usar)
+
+# Banco de Dados SQLite (MUITO IMPORTANTE PARA O SEU PROJETO)
+*.sqlite
+*.sqlite3
+database.sqlite # Garante que o seu arquivo de DB específico seja ignorado
