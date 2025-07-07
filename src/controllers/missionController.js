@@ -1,6 +1,6 @@
 const missionModel = require('../models/missionModel');
 
-// Função controladora para criar uma nova missão (já existe)
+// **DEFINIÇÃO DA FUNÇÃO CREATE MISSION (COLOQUE ESTA DE VOLTA!)**
 const createMission = (req, res) => {
   const newMission = req.body;
 
@@ -17,22 +17,21 @@ const createMission = (req, res) => {
   });
 };
 
-//Obter todas as missões
+// **DEFINIÇÃO DA FUNÇÃO GET MISSIONS (COLOQUE ESTA DE VOLTA!)**
 const getMissions = (req, res) => {
   missionModel.getMissions((err, missions) => {
     if (err) {
       console.error('Erro no controller ao obter todas as missões:', err.message);
       return res.status(500).json({ message: 'Erro interno do servidor ao obter missões.' });
     }
-    res.status(200).json(missions); // Retorna o array de missões com status 200 OK
+    res.status(200).json(missions);
   });
 };
 
-//Obter uma missão por ID
+// **DEFINIÇÃO DA FUNÇÃO GET MISSION BY ID (COLOQUE ESTA DE VOLTA!)**
 const getMissionById = (req, res) => {
-  const { id } = req.params; // Pega o ID da URL (ex: /missions/123)
+  const { id } = req.params;
 
-  // Validação básica: garante que o ID é um número
   if (isNaN(id)) {
     return res.status(400).json({ message: 'ID da missão inválido. Deve ser um número.' });
   }
@@ -43,14 +42,41 @@ const getMissionById = (req, res) => {
       return res.status(500).json({ message: 'Erro interno do servidor ao obter missão.' });
     }
     if (!mission) {
-      return res.status(404).json({ message: 'Missão não encontrada.' }); // Status 404 Not Found se não houver missão com o ID
+      return res.status(404).json({ message: 'Missão não encontrada.' });
     }
-    res.status(200).json(mission); // Retorna a missão encontrada com status 200 OK
+    res.status(200).json(mission);
   });
 };
 
+// DEFINIÇÃO DA FUNÇÃO UPDATE MISSION (esta você já adicionou)
+const updateMission = (req, res) => {
+  const { id } = req.params;
+  const updatedMissionData = req.body;
+
+  if (isNaN(id)) {
+    return res.status(400).json({ message: 'ID da missão inválido. Deve ser um número.' });
+  }
+
+  if (Object.keys(updatedMissionData).length === 0) {
+    return res.status(400).json({ message: 'Corpo da requisição vazio. Forneça dados para atualização.' });
+  }
+
+  missionModel.updateMission(id, updatedMissionData, (err, result) => {
+    if (err) {
+      console.error('Erro no controller ao atualizar missão:', err.message);
+      return res.status(500).json({ message: 'Erro interno do servidor ao atualizar missão.' });
+    }
+    if (result === null) {
+      return res.status(404).json({ message: 'Missão não encontrada para atualização.' });
+    }
+    res.status(200).json({ message: 'Missão atualizada com sucesso.', mission: result });
+  });
+};
+
+// Garanta que todas as funções estão sendo exportadas
 module.exports = {
   createMission,
-  getMissions,      
-  getMissionById,   
+  getMissions,
+  getMissionById,
+  updateMission,
 };
