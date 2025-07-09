@@ -1,6 +1,6 @@
 const missionModel = require('../models/missionModel');
 
-// **DEFINIÇÃO DA FUNÇÃO CREATE MISSION (COLOQUE ESTA DE VOLTA!)**
+// Função controladora para criar uma nova missão
 const createMission = (req, res) => {
   const newMission = req.body;
 
@@ -17,7 +17,7 @@ const createMission = (req, res) => {
   });
 };
 
-// **DEFINIÇÃO DA FUNÇÃO GET MISSIONS (COLOQUE ESTA DE VOLTA!)**
+// Função controladora para obter todas as missões
 const getMissions = (req, res) => {
   missionModel.getMissions((err, missions) => {
     if (err) {
@@ -28,7 +28,7 @@ const getMissions = (req, res) => {
   });
 };
 
-// **DEFINIÇÃO DA FUNÇÃO GET MISSION BY ID (COLOQUE ESTA DE VOLTA!)**
+// Função controladora para obter uma missão por ID
 const getMissionById = (req, res) => {
   const { id } = req.params;
 
@@ -48,7 +48,7 @@ const getMissionById = (req, res) => {
   });
 };
 
-// DEFINIÇÃO DA FUNÇÃO UPDATE MISSION (esta você já adicionou)
+// Função controladora para atualizar uma missão
 const updateMission = (req, res) => {
   const { id } = req.params;
   const updatedMissionData = req.body;
@@ -73,10 +73,31 @@ const updateMission = (req, res) => {
   });
 };
 
-// Garanta que todas as funções estão sendo exportadas
+// Função controladora para excluir uma missão
+const deleteMission = (req, res) => {
+  const { id } = req.params;
+
+  if (isNaN(id)) {
+    return res.status(400).json({ message: 'ID da missão inválido. Deve ser um número.' });
+  }
+
+  missionModel.deleteMission(id, (err, result) => {
+    if (err) {
+      console.error('Erro no controller ao excluir missão:', err.message);
+      return res.status(500).json({ message: 'Erro interno do servidor ao excluir missão.' });
+    }
+    if (result === null) {
+      return res.status(404).json({ message: 'Missão não encontrada para exclusão.' });
+    }
+    res.status(204).send();
+  });
+};
+
+// Exporta todas as funções
 module.exports = {
   createMission,
   getMissions,
   getMissionById,
   updateMission,
+  deleteMission, // Garanta que deleteMission está aqui!
 };

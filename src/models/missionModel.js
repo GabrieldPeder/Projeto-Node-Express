@@ -1,6 +1,6 @@
 const db = require('../database/db');
 
-// **DEFINIÇÃO DA FUNÇÃO CREATE MISSION (COLOQUE ESTA DE VOLTA!)**
+// Função para criar uma nova missão no banco de dados
 const createMission = (mission, callback) => {
   const { name, crew, spacecraft, destination, status, duration } = mission;
 
@@ -18,7 +18,7 @@ const createMission = (mission, callback) => {
   });
 };
 
-// **DEFINIÇÃO DA FUNÇÃO GET MISSIONS (COLOQUE ESTA DE VOLTA!)**
+// Função para obter todas as missões
 const getMissions = (callback) => {
   const sql = `SELECT * FROM missions`;
   db.all(sql, [], (err, rows) => {
@@ -30,7 +30,7 @@ const getMissions = (callback) => {
   });
 };
 
-// **DEFINIÇÃO DA FUNÇÃO GET MISSION BY ID (COLOQUE ESTA DE VOLTA!)**
+// Função para obter uma missão por ID
 const getMissionById = (id, callback) => {
   const sql = `SELECT * FROM missions WHERE id = ?`;
   db.get(sql, [id], (err, row) => {
@@ -42,7 +42,7 @@ const getMissionById = (id, callback) => {
   });
 };
 
-// DEFINIÇÃO DA FUNÇÃO UPDATE MISSION (esta você já adicionou)
+// Função para atualizar uma missão existente
 const updateMission = (id, mission, callback) => {
   const { name, crew, spacecraft, destination, status, duration } = mission;
 
@@ -64,10 +64,27 @@ const updateMission = (id, mission, callback) => {
   });
 };
 
-// Garanta que todas as funções estão sendo exportadas
+// Função para excluir uma missão
+const deleteMission = (id, callback) => {
+  const sql = `DELETE FROM missions WHERE id = ?`;
+
+  db.run(sql, [id], function(err) {
+    if (err) {
+      console.error('Erro ao excluir missão no modelo:', err.message);
+      return callback(err);
+    }
+    if (this.changes === 0) {
+      return callback(null, null);
+    }
+    callback(null, id);
+  });
+};
+
+// Exporta todas as funções
 module.exports = {
   createMission,
   getMissions,
   getMissionById,
   updateMission,
+  deleteMission, // Garanta que deleteMission está aqui!
 };

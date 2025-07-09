@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Missões Espaciais</title>
+    <!-- Tailwind CSS CDN para estilização base -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Link para o seu arquivo de estilos personalizado -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-8">
+    <div class="container bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
+        <h1 class="text-4xl font-bold text-center text-gray-800 mb-8">Gerenciador de Missões Espaciais</h1>
+
+        <!-- Formulário para Criar/Atualizar Missão -->
+        <div class="mb-10 p-6 bg-blue-50 rounded-lg shadow-sm">
+            <h2 id="form-title" class="text-2xl font-semibold text-blue-800 mb-4">Criar Nova Missão</h2>
+            <form id="mission-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="hidden" id="mission-id">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nome da Missão</label>
+                    <input type="text" id="name" name="name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="crew" class="block text-sm font-medium text-gray-700">Tripulação</label>
+                    <input type="text" id="crew" name="crew" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="spacecraft" class="block text-sm font-medium text-gray-700">Nave Espacial</label>
+                    <input type="text" id="spacecraft" name="spacecraft" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="destination" class="block text-sm font-medium text-gray-700">Destino</label>
+                    <input type="text" id="destination" name="destination" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select id="status" name="status" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="">Selecione um status</option>
+                        <option value="Planejada">Planejada</option>
+                        <option value="Em Andamento">Em Andamento</option>
+                        <option value="Concluída">Concluída</option>
+                        <option value="Cancelada">Cancelada</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="duration" class="block text-sm font-medium text-gray-700">Duração (dias)</label>
+                    <input type="number" id="duration" name="duration" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div class="md:col-span-2 flex justify-end space-x-2 mt-4">
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Salvar Missão</button>
+                    <button type="button" id="cancel-update" class="px-6 py-2 bg-gray-300 text-gray-800 font-semibold rounded-md shadow-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 hidden">Cancelar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Seção de Busca por ID -->
+        <div class="mb-10 p-6 bg-green-50 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-semibold text-green-800 mb-4">Buscar Missão por ID</h2>
+            <div class="flex space-x-2">
+                <input type="number" id="search-id" placeholder="ID da Missão" class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm">
+                <button id="search-button" class="px-6 py-2 bg-green-600 text-white font-semibold rounded-md shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">Buscar</button>
+                <button id="show-all-button" class="px-6 py-2 bg-purple-600 text-white font-semibold rounded-md shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">Mostrar Todas</button>
+            </div>
+            <div id="search-result" class="mt-4 p-4 bg-white rounded-md border border-gray-200 hidden">
+                <!-- Resultado da busca será injetado aqui -->
+            </div>
+        </div>
+
+        <!-- Lista de Missões -->
+        <div class="p-6 bg-gray-50 rounded-lg shadow-sm">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Missões Cadastradas</h2>
+            <div id="missions-list" class="grid grid-cols-1 gap-4">
+                <!-- Missões serão carregadas aqui -->
+                <p class="text-center text-gray-500" id="loading-message">Carregando missões...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para mensagens -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <p id="modal-text" class="text-lg text-center font-medium"></p>
+        </div>
+    </div>
+
+    <!-- Link para o seu arquivo JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
