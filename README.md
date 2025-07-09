@@ -153,10 +153,8 @@ Passos
 
     Clone o repositório:
 
-    git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
-    cd SEU_REPOSITORIO # Navegue até a pasta raiz do projeto
-
-    (Importante: Substitua SEU_USUARIO e SEU_REPOSITORIO pelos seus dados reais do GitHub!)
+    git clone https://github.com/GabrieldPeder/Projeto-Node-Express.git
+    cd Projeto-Node-Express
 
     Instale as dependências:
     Na pasta raiz do projeto, execute o comando para instalar todas as bibliotecas necessárias:
