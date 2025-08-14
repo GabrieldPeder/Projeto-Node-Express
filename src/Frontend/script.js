@@ -15,8 +15,20 @@ const searchResultDiv = document.getElementById('search-result');
 const messageModal = document.getElementById('message-modal');
 const modalText = document.getElementById('modal-text');
 const closeButton = document.querySelector('.close-button');
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
 // --- Funções Auxiliares ---
+
+app.use(cors());
+
+app.get('/missions', (req, res) => {
+});
+
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
+});
 
 // Função para exibir mensagens no modal
 function showModal(message, isError = false) {
