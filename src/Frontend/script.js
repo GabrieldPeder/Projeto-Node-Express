@@ -15,20 +15,8 @@ const searchResultDiv = document.getElementById('search-result');
 const messageModal = document.getElementById('message-modal');
 const modalText = document.getElementById('modal-text');
 const closeButton = document.querySelector('.close-button');
-const express = require('express');
-const cors = require('cors');
-const app = express();
 
 // --- Funções Auxiliares ---
-
-app.use(cors());
-
-app.get('/missions', (req, res) => {
-});
-
-app.listen(3000, () => {
-    console.log('Servidor rodando na porta 3000');
-});
 
 // Função para exibir mensagens no modal
 function showModal(message, isError = false) {
@@ -78,7 +66,7 @@ function renderMission(mission) {
 }
 
 // Função para carregar e exibir todas as missões da API
-async function loadMissions() {
+/*async function loadMissions() {
     missionsList.innerHTML = ''; // Limpa a lista atual de missões
     loadingMessage.classList.remove('hidden'); // Mostra a mensagem de carregamento
 
@@ -106,7 +94,7 @@ async function loadMissions() {
         loadingMessage.classList.remove('hidden');
         showModal('Erro ao carregar missões. Verifique o console.', true); // Exibe erro no modal
     }
-}
+}*/
 
 // --- Funções CRUD (Interação com a API) ---
 
