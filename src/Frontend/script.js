@@ -66,7 +66,7 @@ function renderMission(mission) {
 }
 
 // Função para carregar e exibir todas as missões da API
-/*async function loadMissions() {
+async function loadMissions() {
     missionsList.innerHTML = ''; // Limpa a lista atual de missões
     loadingMessage.classList.remove('hidden'); // Mostra a mensagem de carregamento
 
@@ -88,13 +88,13 @@ function renderMission(mission) {
                 missionsList.appendChild(renderMission(mission));
             });
         }
-    } catch (error) {
-        console.error('Erro ao carregar missões:', error);
-        loadingMessage.textContent = 'Erro ao carregar missões. Tente novamente mais tarde.';
-        loadingMessage.classList.remove('hidden');
+    }   catch (error) {
+            console.error('Erro ao carregar missões:', error);
+                loadingMessage.textContent = 'Erro ao carregar missões. Tente novamente mais tarde.';
+                loadingMessage.classList.remove('hidden');
         showModal('Erro ao carregar missões. Verifique o console.', true); // Exibe erro no modal
     }
-}*/
+}
 
 // --- Funções CRUD (Interação com a API) ---
 
