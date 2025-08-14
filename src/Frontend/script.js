@@ -1,6 +1,4 @@
-// script.js
-
-// Define a URL base da sua API
+// Define a URL base da API
 const API_BASE_URL = 'http://localhost:3000/missions';
 
 // Referências aos elementos do DOM
@@ -75,7 +73,7 @@ async function loadMissions() {
     try {
         const response = await fetch(API_BASE_URL); // Faz uma requisição GET para a API
         if (!response.ok) {
-            // Se a resposta não for OK (status 2xx), lança um erro
+            // Se a resposta não for OK, lança um erro
             throw new Error(`Erro HTTP: ${response.status}`);
         }
         const missions = await response.json(); // Converte a resposta para JSON
